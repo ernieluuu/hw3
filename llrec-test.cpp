@@ -73,22 +73,32 @@ void dealloc(Node* head)
 
 int main(int argc, char* argv[])
 {
-    if(argc < 2) {
-        cout << "Please provide an input file" << endl;
-        return 1;
-    }
+    //if(argc < 2) {
+    //    cout << "Please provide an input file" << endl;
+    //    return 1;
+    //}
 
     // -----------------------------------------------
     // Feel free to update any code below this point
     // -----------------------------------------------
-    Node* head = readList(argv[1]);
-    cout << "Original list: ";
+    
+	Node* head = readList("llrec-test1.in");
+	//Node* head = readList(argv[1]);
+	cout << "Original list: ";
     print(head);
 
     // Test out your linked list code
 
+	Node* smaller = nullptr;
+	Node* larger = nullptr;
 
+	llpivot(head, smaller, larger, 9);
 
+	cout << "Smaller: ";
+	print(smaller);
+
+	cout << "Larger: ";
+	print(larger);
     
     return 0;
 

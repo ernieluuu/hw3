@@ -4,9 +4,12 @@
 #include <vector>
 #include <stdexcept>
 
+/*inherited privately because we want the functionality of the stack
+to be dictated by us, otherwise it would not be a stack.*/
+
 // Use inheritance from std::vector (choose public/private) as appropriate
 template <typename T>
-class Stack 
+class Stack : private Vector
 {
 public:
     Stack();

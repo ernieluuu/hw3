@@ -48,6 +48,7 @@ struct Node
  *
  */
 void llpivot(Node *&head, Node *&smaller, Node *&larger, int pivot);
+//void _llpivot(Node*& head, Node*& smaller, Node*& larger, int pivot);
 
 /**
  * Given a linked list pointed to by head, removes (filters out) nodes
@@ -84,6 +85,24 @@ Node* llfilter(Node* head, Comp pred)
     // Provide your implementation below
     //*********************************************
 
+	/*TODO: need to test this function*/
+
+	if (head != nullptr)
+	{
+		head->next = llfilter(head->next, pred);
+
+		if (pred(head))
+		{
+			/*is dynamic allocation necessary?*/
+			Node* temp = new Node(head->next->val, head->next->next);
+			delete head;
+			return temp;
+		}
+		else
+		{
+			return head;
+		}
+	}
 
 }
 

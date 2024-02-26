@@ -1,2 +1,10 @@
 *.o
 llrec-test
+.vs
+hw3.sln
+hw3.cpp
+hw3.vcxproj
+hw3.vcxproj.filters
+hw3.vcxproj.user
+hw3_tests/
+x64/
