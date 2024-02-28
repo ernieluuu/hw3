@@ -2,6 +2,7 @@
 #include <fstream>
 #include <functional>
 #include "llrec.h"
+#include "stack.h"
 using namespace std;
 
 /**
@@ -99,7 +100,38 @@ int main(int argc, char* argv[])
 
 	cout << "Larger: ";
 	print(larger);
-    
+
+	//dealloc(head);
+
+	cout << "---------------TESTING STACK----------------" << endl;
+
+	Stack<int> myStack;
+
+	myStack.push(9);
+
+	myStack.push(6);
+
+	myStack.push(7);
+
+	myStack.pop();
+
+	myStack.push(4);
+
+	myStack.push(19);
+
+	cout << "Top: " << myStack.top() << endl;
+	cout << "Size: " << myStack.size() << endl;
+
+	cout << "Vector Contents: ";
+
+	// might need a print stack function
+
+	/*change to public inheritance to access it!*/
+	/*purely for the sake of testing, then change it back.*/
+	for (const auto& elem : myStack) {
+		std::cout << elem << " ";
+	}
+
     return 0;
 
 }
