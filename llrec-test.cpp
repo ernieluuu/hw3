@@ -3,6 +3,7 @@
 #include <functional>
 #include "llrec.h"
 #include "stack.h"
+#include "heap.h"
 using namespace std;
 
 /**
@@ -128,9 +129,15 @@ int main(int argc, char* argv[])
 
 	/*change to public inheritance to access it!*/
 	/*purely for the sake of testing, then change it back.*/
-	for (const auto& elem : myStack) {
-		std::cout << elem << " ";
-	}
+	//for (const auto& elem : myStack) {
+	//	std::cout << elem << " ";
+	//}
+
+	cout << endl << "--------Testing Heap--------" << endl;
+
+	// set the comp = std::less or something
+
+	Heap<int, std::less<int>> myHeap();
 
     return 0;
 

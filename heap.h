@@ -2,6 +2,7 @@
 #define HEAP_H
 #include <functional>
 #include <stdexcept>
+#include <cmath> /*included to implement ceiling division*/
 
 template <typename T, typename PComparator = std::less<T> >
 class Heap
@@ -59,16 +60,80 @@ public:
    */
   size_t size() const;
 
+  // added member functions
+
+  /*add parameters for these?*/
+
+  void trickleUp();
+
+  void trickleDown();
+
+  /*prints the contents and indices of the vector*/
+  void printHeap();
+
 private:
-  /// Add whatever helper functions and data members you need below
 
+	std::vector<T> heap_;
 
+	size_t size_;
 
+	int m_;
+
+	PComparator comp_;
+
+    // size_ (probably)
+	// ptr to top item? no, cuz with a vector the top item is idx 0
+	// ptr to bottom item? no, cuz the last item is at the back of the vector.
+	// vector to store this. left child right arithmetic.
+
+	// heapify, trickle up, trickle down
+	// need to do it for m-ary -- redekopp slides is just for binary.
+
+	// push calls trickle up
+	// --> place the new node at last then call trickle up
+	// --> trickle up takes last node as parameter
+	// pop calls trickle down
+	// pop swap root + last one then pop the last one 
+	// + do trickle down to get it to the right place
 
 };
 
 // Add implementation of member functions here
 
+
+template<typename T, typename PComparator>
+Heap<T, PComparator>::Heap(int m, PComparator c)
+{
+	size_ = 0;
+	m_ = m;
+	comp_ = c;
+}
+
+template<typename T, typename PComparator>
+Heap<T, PComparator>::~Heap()
+{
+}
+
+template<typename T, typename PComparator>
+void Heap<T, PComparator>::push(const T& item)
+{
+	/*
+	a series of starting at the back (the first empty idx)
+	and comparing it to the parent, and making the necessary
+	swaps.
+	use the PComparator template to do the comparison so it works
+	for many different types.
+	*/
+
+	// push back into the vector
+	// update size_
+	// call trickleUp
+
+	heap_.push_back(item);
+	++size_;
+	trickleUp();
+
+}
 
 // We will start top() for you to handle the case of 
 // calling top on an empty heap
@@ -81,13 +146,13 @@ T const & Heap<T,PComparator>::top() const
     // ================================
     // throw the appropriate exception
     // ================================
-
-
+	  throw std::underflow_error("called top on empty heap.");
   }
   // If we get here we know the heap has at least 1 item
   // Add code to return the top element
-
-
+  
+  // return first item in vector
+  return heap_.front();
 
 }
 
@@ -101,15 +166,127 @@ void Heap<T,PComparator>::pop()
     // ================================
     // throw the appropriate exception
     // ================================
-
-
+	  throw std::underflow_error("called top on empty heap.");
   }
 
+  // swap first + last item, then pop_back()
+  heap_[0] = heap_[size_ - 1];
+  heap_.pop_back();
+  --size_;
+  trickleDown();
+}
 
+template<typename T, typename PComparator>
+bool Heap<T, PComparator>::empty() const
+{
+	return size_ == 0;
+}
+
+template<typename T, typename PComparator>
+size_t Heap<T, PComparator>::size() const
+{
+	return this->size_;
+}
+
+template<typename T, typename PComparator>
+void Heap<T, PComparator>::trickleUp()
+{
+	// use PComparator (returns a bool) PComparator(x,y)
+
+	// start @ last idx (that's where we placed the new node)
+	// and then keep comparing it to the parent until comp_ is false
+
+	int xIdx = size_ - 1;
+	int yIdx = static_cast<int>(std::ceil(static_cast<double>(size - 1) / m_)) - 1;
+
+	/*where x is the element at the last idx and y is the parent of x*/
+	T x = heap_[xIdx];
+	T y = heap_[yIdx];
+
+	while (comp_(x,y) && x != 0)
+	{
+		// swap
+		T temp = x;
+		heap_[xIdx] = y;
+		heap_[yIdx] = temp;
+
+		// update x + y
+		xIdx = yIdx;
+		yIdx = static_cast<int>(std::ceil(static_cast<double>(xIdx) / m_)) - 1;
+
+		x = heap_[xIdx];
+		y = heap_[yIdx];
+	}
+}
+
+template<typename T, typename PComparator>
+void Heap<T, PComparator>::trickleDown()
+{
+	// start at top
+
+	/*
+	Note : This is true when your heap is starting from index 1. 
+	If the heap is starting at position 0, the values are 
+	(2*i) +1 and (2*i) +2 for left and right child respectively.
+	*/
+
+	// for all the children, find the 'best' (use comp_ on all the children first)
+	// then if comp_(child, top), do swap.
+
+	T curr_item = this->top();
+
+	T best_item;
+
+	int currIdx = 0;
+	int bestItemIdx;
+
+	while (m_*currIdx >= size_) /*breaks when there is no child node for the given parent*/
+	{
+
+		int firstChildIdx = m_ * currIdx + 1;
+
+		/*compares all the children nodes to find the 'best' one*/
+		best_item = heap_[firstChildIdx];
+		for (int i = firstChildIdx+1; i < firstChildIdx+m_; i++)
+		{
+			// if out of bounds, break out of the for loop
+			if (i >= size_)
+			{
+				break;
+			}
+
+			/*if curr item is better than the best item*/
+			if (comp_(heap_[firstChildIdx + i], best_item))
+			{
+				// update best item
+				best_item = heap_[firstChildIdx + i];
+				bestItemIdx = firstChildIdx + i;
+			}
+		}
+
+		/*if the item we are trickling down is in the right place ('better' than all children)*/
+		if (comp_(curr_item, best_item))
+		{
+			break;
+		}
+		else 
+		{
+			// swap
+			T temp = curr_item;
+			heap_[currIdx] = best_item;
+			heap_[bestItemIdx] = curr_item;
+			// update currIdx (where is the root node now?)
+			currIdx = bestItemIdx;
+		}	
+	}
 
 }
 
-
+/*helper function for debugging*/
+template<typename T, typename PComparator>
+void Heap<T, PComparator>::printHeap()
+{
+}
 
 #endif
 

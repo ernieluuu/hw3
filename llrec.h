@@ -93,8 +93,11 @@ Node* llfilter(Node* head, Comp pred)
 
 		if (pred(head))
 		{
-			/*is dynamic allocation necessary?*/
+			/*is dynamic allocation necessary?
 			Node* temp = new Node(head->next->val, head->next->next);
+			delete head;
+			return temp;*/
+			Node* temp = head->next;
 			delete head;
 			return temp;
 		}
@@ -102,6 +105,10 @@ Node* llfilter(Node* head, Comp pred)
 		{
 			return head;
 		}
+	}
+	else
+	{
+		return nullptr;
 	}
 
 }
