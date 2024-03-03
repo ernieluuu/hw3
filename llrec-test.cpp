@@ -137,7 +137,21 @@ int main(int argc, char* argv[])
 
 	// set the comp = std::less or something
 
-	Heap<int, std::less<int>> myHeap();
+	Heap<int> myHeap;
+
+	myHeap.push(17);
+
+	myHeap.push(16);
+	
+	myHeap.push(210);
+
+	myHeap.push(2);
+
+	myHeap.push(49);
+
+	myHeap.push(1);
+
+	myHeap.printHeap();
 
     return 0;
 

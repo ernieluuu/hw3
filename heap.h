@@ -80,22 +80,6 @@ private:
 	int m_;
 
 	PComparator comp_;
-
-    // size_ (probably)
-	// ptr to top item? no, cuz with a vector the top item is idx 0
-	// ptr to bottom item? no, cuz the last item is at the back of the vector.
-	// vector to store this. left child right arithmetic.
-
-	// heapify, trickle up, trickle down
-	// need to do it for m-ary -- redekopp slides is just for binary.
-
-	// push calls trickle up
-	// --> place the new node at last then call trickle up
-	// --> trickle up takes last node as parameter
-	// pop calls trickle down
-	// pop swap root + last one then pop the last one 
-	// + do trickle down to get it to the right place
-
 };
 
 // Add implementation of member functions here
@@ -196,19 +180,30 @@ void Heap<T, PComparator>::trickleUp()
 	// start @ last idx (that's where we placed the new node)
 	// and then keep comparing it to the parent until comp_ is false
 
+	if (size_ == 1)
+	{
+		return;
+	}
+
 	int xIdx = size_ - 1;
-	int yIdx = static_cast<int>(std::ceil(static_cast<double>(size - 1) / m_)) - 1;
+	int yIdx = static_cast<int>(std::ceil(static_cast<double>(size_ - 1) / m_)) - 1;
 
 	/*where x is the element at the last idx and y is the parent of x*/
 	T x = heap_[xIdx];
 	T y = heap_[yIdx];
 
-	while (comp_(x,y) && x != 0)
+	while (comp_(x,y))
 	{
 		// swap
 		T temp = x;
 		heap_[xIdx] = y;
 		heap_[yIdx] = temp;
+
+		// if x has become the root node
+		if (yIdx == 0)
+		{
+			break;
+		}
 
 		// update x + y
 		xIdx = yIdx;
@@ -286,6 +281,12 @@ void Heap<T, PComparator>::trickleDown()
 template<typename T, typename PComparator>
 void Heap<T, PComparator>::printHeap()
 {
+	std::cout << "Heap Contents (idx, content):" << std::endl;
+
+	for (int i = 0; i < size_; i++)
+	{
+		std::cout << "idx " << i << ": " << heap_[i] << std::endl;
+	}
 }
 
 #endif
