@@ -150,7 +150,7 @@ void Heap<T,PComparator>::pop()
     // ================================
     // throw the appropriate exception
     // ================================
-	  throw std::underflow_error("called top on empty heap.");
+	  throw std::underflow_error("called pop on empty heap.");
   }
 
   // swap first + last item, then pop_back()
@@ -225,23 +225,36 @@ void Heap<T, PComparator>::trickleDown()
 	(2*i) +1 and (2*i) +2 for left and right child respectively.
 	*/
 
+	if (this->empty())
+	{
+		return;
+	}
+
 	// for all the children, find the 'best' (use comp_ on all the children first)
 	// then if comp_(child, top), do swap.
 
 	T curr_item = this->top();
 
+	/*tracks the best of the children nodes*/
 	T best_item;
 
 	int currIdx = 0;
 	int bestItemIdx;
 
-	while (m_*currIdx >= size_) /*breaks when there is no child node for the given parent*/
+	while (1) 
 	{
 
 		int firstChildIdx = m_ * currIdx + 1;
 
+		/*breaks when there is no child node for the given parent*/
+		if (firstChildIdx >= size_)
+		{
+			break;
+		}
+
 		/*compares all the children nodes to find the 'best' one*/
 		best_item = heap_[firstChildIdx];
+		bestItemIdx = firstChildIdx;
 		for (int i = firstChildIdx+1; i < firstChildIdx+m_; i++)
 		{
 			// if out of bounds, break out of the for loop
@@ -251,11 +264,11 @@ void Heap<T, PComparator>::trickleDown()
 			}
 
 			/*if curr item is better than the best item*/
-			if (comp_(heap_[firstChildIdx + i], best_item))
+			if (comp_(heap_[i], best_item))
 			{
 				// update best item
-				best_item = heap_[firstChildIdx + i];
-				bestItemIdx = firstChildIdx + i;
+				best_item = heap_[i];
+				bestItemIdx = i;
 			}
 		}
 
@@ -269,7 +282,7 @@ void Heap<T, PComparator>::trickleDown()
 			// swap
 			T temp = curr_item;
 			heap_[currIdx] = best_item;
-			heap_[bestItemIdx] = curr_item;
+			heap_[bestItemIdx] = temp;
 			// update currIdx (where is the root node now?)
 			currIdx = bestItemIdx;
 		}	

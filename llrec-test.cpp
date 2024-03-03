@@ -153,6 +153,28 @@ int main(int argc, char* argv[])
 
 	myHeap.printHeap();
 
+	myHeap.pop();
+
+	cout << "----after pop----" << endl;
+
+	myHeap.printHeap();
+
+	cout << "----after more pops----" << endl;
+
+	myHeap.pop();
+
+	myHeap.pop();
+
+	myHeap.pop();
+
+	myHeap.printHeap();
+
+	myHeap.pop();
+
+	myHeap.printHeap();
+
+	myHeap.pop();
+
     return 0;
 
 }
