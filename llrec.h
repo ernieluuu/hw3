@@ -91,7 +91,7 @@ Node* llfilter(Node* head, Comp pred)
 	{
 		head->next = llfilter(head->next, pred);
 
-		if (pred(head))
+		if (pred(head->val))
 		{
 			/*is dynamic allocation necessary?
 			Node* temp = new Node(head->next->val, head->next->next);

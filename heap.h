@@ -3,6 +3,8 @@
 #include <functional>
 #include <stdexcept>
 #include <cmath> /*included to implement ceiling division*/
+#include <vector>
+#include <iostream> /*FIXME: remove this when submitting*/
 
 template <typename T, typename PComparator = std::less<T> >
 class Heap
