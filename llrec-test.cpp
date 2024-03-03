@@ -104,77 +104,77 @@ int main(int argc, char* argv[])
 
 	//dealloc(head);
 
-	cout << "---------------TESTING STACK----------------" << endl;
+	//cout << "---------------TESTING STACK----------------" << endl;
 
-	Stack<int> myStack;
+	//Stack<int> myStack;
 
-	myStack.push(9);
+	//myStack.push(9);
 
-	myStack.push(6);
+	//myStack.push(6);
 
-	myStack.push(7);
+	//myStack.push(7);
 
-	myStack.pop();
+	//myStack.pop();
 
-	myStack.push(4);
+	//myStack.push(4);
 
-	myStack.push(19);
+	//myStack.push(19);
 
-	cout << "Top: " << myStack.top() << endl;
-	cout << "Size: " << myStack.size() << endl;
+	//cout << "Top: " << myStack.top() << endl;
+	//cout << "Size: " << myStack.size() << endl;
 
-	cout << "Vector Contents: ";
+	//cout << "Vector Contents: ";
 
-	// might need a print stack function
+	//// might need a print stack function
 
-	/*change to public inheritance to access it!*/
-	/*purely for the sake of testing, then change it back.*/
-	//for (const auto& elem : myStack) {
-	//	std::cout << elem << " ";
-	//}
+	///*change to public inheritance to access it!*/
+	///*purely for the sake of testing, then change it back.*/
+	////for (const auto& elem : myStack) {
+	////	std::cout << elem << " ";
+	////}
 
-	cout << endl << "--------Testing Heap--------" << endl;
+	//cout << endl << "--------Testing Heap--------" << endl;
 
-	// set the comp = std::less or something
+	//// set the comp = std::less or something
 
-	Heap<int> myHeap;
+	//Heap<int> myHeap;
 
-	myHeap.push(17);
+	//myHeap.push(17);
 
-	myHeap.push(16);
-	
-	myHeap.push(210);
+	//myHeap.push(16);
+	//
+	//myHeap.push(210);
 
-	myHeap.push(2);
+	//myHeap.push(2);
 
-	myHeap.push(49);
+	//myHeap.push(49);
 
-	myHeap.push(1);
+	//myHeap.push(1);
 
-	myHeap.printHeap();
+	//myHeap.printHeap();
 
-	myHeap.pop();
+	//myHeap.pop();
 
-	cout << "----after pop----" << endl;
+	//cout << "----after pop----" << endl;
 
-	myHeap.printHeap();
+	//myHeap.printHeap();
 
-	cout << "----after more pops----" << endl;
+	//cout << "----after more pops----" << endl;
 
-	myHeap.pop();
+	//myHeap.pop();
 
-	myHeap.pop();
+	//myHeap.pop();
 
-	myHeap.pop();
+	//myHeap.pop();
 
-	myHeap.printHeap();
+	//myHeap.printHeap();
 
-	myHeap.pop();
+	//myHeap.pop();
 
-	myHeap.printHeap();
+	//myHeap.printHeap();
 
-	myHeap.pop();
+	//myHeap.pop();
 
-    return 0;
+ //   return 0;
 
 }

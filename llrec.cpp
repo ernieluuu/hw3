@@ -6,6 +6,13 @@
 
 void llpivot(Node*& head, Node*& smaller, Node*& larger, int pivot)
 {
+	if (head == nullptr)
+	{
+		smaller = nullptr;
+		larger = nullptr;
+		return;
+	}
+
 	if (head != nullptr)
 	{
 		// recursive statement
@@ -13,18 +20,15 @@ void llpivot(Node*& head, Node*& smaller, Node*& larger, int pivot)
 
 		if (head->val <= pivot)
 		{
-			Node* temp = new Node(head->val, smaller);
-			smaller = temp;
-			delete head;
-			return;
+			head->next = smaller;
+			smaller = head;
 		}
 
-		if (head->val > pivot)
+		else if (head->val > pivot)
 		{
-			Node* temp = new Node(head->val, larger);
-			larger = temp;
-			delete head;
-			return;
+			head->next = larger;
+			larger = head;
 		}
 	}
+	head = nullptr;
 }
